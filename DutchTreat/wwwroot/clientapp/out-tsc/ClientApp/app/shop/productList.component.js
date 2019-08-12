@@ -1,24 +1,27 @@
 import * as tslib_1 from "tslib";
 import { Component } from '@angular/core';
 var ProductList = /** @class */ (function () {
-    function ProductList() {
-        this.products = [{
-                title: "First Product",
-                price: 19.99
-            }, {
-                title: "Second Product",
-                price: 9.99
-            }, {
-                title: "Third Product",
-                price: 14.99
-            }
-        ];
+    function ProductList(data) {
+        this.data = data;
+        this.products = [];
     }
+    ProductList.prototype.ngOnInit = function () {
+        var _this = this;
+        this.data.loadProducts()
+            .subscribe(function (success) {
+            if (success) {
+                _this.products = _this.data.products;
+            }
+        });
+    };
+    ProductList.prototype.addProduct = function (product) {
+        this.data.addToOrder(product);
+    };
     ProductList = tslib_1.__decorate([
         Component({
             selector: "product-list",
             templateUrl: "productList.component.html",
-            styleUrls: []
+            styleUrls: ["productList.component.css"]
         })
     ], ProductList);
     return ProductList;

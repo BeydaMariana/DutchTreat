@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿ using AutoMapper;
 using DutchTreat.Data;
 using DutchTreat.Data.Entities;
 using DutchTreat.ViewModels;
@@ -87,8 +87,8 @@ namespace DutchTreat.Controllers
                     newOrder.User = currentUser;
 
 
-                    _repository.AddEntity(newOrder);
-
+                    //_repository.AddEntity(newOrder);
+                    _repository.AddOrder(newOrder);
                     if (_repository.SaveChanges())
                     {
                         

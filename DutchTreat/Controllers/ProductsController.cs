@@ -11,7 +11,7 @@ namespace DutchTreat.Controllers
 {
     [Route("api/[Controller]")]
     [ApiController]
-    [Produces("aplication/json")]
+    //[Produces("aplication/json")]
     public class ProductsController : ControllerBase
     {
         private readonly IDutchRepository _repository;
