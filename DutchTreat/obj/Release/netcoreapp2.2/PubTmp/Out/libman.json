@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "signalr.js@2.4.0",
+      "destination": "wwwroot/lib/signalr.js/"
+    },
+    {
+      "library": "jquery@3.4.0",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "jquery.js",
+        "core.js",
+        "jquery.min.js",
+        "jquery.slim.js",
+        "jquery.min.map",
+        "jquery.slim.min.js",
+        "jquery.slim.min.map"
+      ]
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    }
+  ]
+}

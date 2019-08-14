@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\dist\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,5 +49,11 @@
     <TypeScriptCompile Include="wwwroot\ts\main.ts" />
     <TypeScriptCompile Include="wwwroot\ts\storecustomer.ts" />
   </ItemGroup>
+
+  <Target Name="MyPublishScripts" BeforeTargets="BeforePublish">
+    <Exec Command="npm install"></Exec>
+    <Exec Command="gulp"></Exec>
+    <Exec Command="ng build"></Exec>
+  </Target>
 
 </Project>

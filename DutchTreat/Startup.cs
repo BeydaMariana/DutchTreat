@@ -23,10 +23,12 @@ namespace DutchTreat
     public class Startup
     {
         private IConfiguration _config;
+        private readonly IHostingEnvironment _environment;
 
-        public Startup(IConfiguration config)
+        public Startup(IConfiguration config, IHostingEnvironment environment)
         {
             _config = config;
+            _environment = environment;
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -64,25 +66,30 @@ namespace DutchTreat
             services.AddScoped<IDutchRepository, DutchRepository>();
 
             //Da soporte al servicio email
-            services.AddMvc()
-                .AddJsonOptions(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddMvc(opt =>
+            {
+                if (_environment.IsProduction() && _config["DisableSSL"] != "true")
+                {
+                    opt.Filters.Add(new RequireHttpsAttribute());
+                }
+            }).AddJsonOptions(option => option.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             //app.UseDefaultFiles();//Este siempre debe ir antes que el static
-            //if (env.IsDevelopment()) //Mostrar los errores que al desarrollar en controllers
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/error");
-            //}
+            if (env.IsDevelopment()) //Mostrar los errores que al desarrollar en controllers
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/error");
+            }
             app.UseStaticFiles();
             app.UseAuthentication();
-            app.UseNodeModules(env);
+            //app.UseNodeModules(env);
 
             app.UseMvc(cfg => 
             {

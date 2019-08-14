@@ -40,9 +40,10 @@ export class DataService {
     }
 
     public checkout() {
-        if (this.order.orderNumber) {
+        if (!this.order.orderNumber) {
             this.order.orderNumber = this.order.orderDate.getFullYear().toString() + this.order.orderDate.getTime().toString();
         }
+
 
         return this.http.post("/api/orders", this.order, {
             headers: new HttpHeaders().set("Authorization", "Bearer " + this.token) 
